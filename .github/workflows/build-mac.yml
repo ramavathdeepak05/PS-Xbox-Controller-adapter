@@ -1,0 +1,52 @@
+name: Build Mac app
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "ps3_adapter.py"
+      - "platform_mac.py"
+      - "platform_win.py"
+      - "ui/**"
+      - ".github/workflows/build-mac.yml"
+
+jobs:
+  build:
+    runs-on: macos-14
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        run: python -m pip install pywebview pygame pyinstaller
+
+      - name: Build the app
+        run: >
+          python -m PyInstaller --noconfirm --clean --windowed
+          --name GamepadAdapter
+          --add-data "ui:ui"
+          --hidden-import webview
+          --hidden-import pygame._sdl2.controller
+          --collect-all pygame
+          ps3_adapter.py
+
+      - name: Zip the app
+        run: ditto -c -k --keepParent dist/GamepadAdapter.app GamepadAdapter-mac.zip
+
+      - name: Publish the Mac download
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: mac-${{ github.run_number }}
+          name: Mac app ${{ github.run_number }}
+          files: GamepadAdapter-mac.zip
+          make_latest: true
+          body: >
+            Apple Silicon build of GamepadAdapter.
+            Unzip, right-click GamepadAdapter.app, and choose Open the first time.
+            Then allow it under System Settings, Privacy and Security, Accessibility.
