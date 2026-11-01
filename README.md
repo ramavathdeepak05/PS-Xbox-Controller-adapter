@@ -1,5 +1,7 @@
 # PS / Xbox Controller Adapter
 
+![PS / Xbox Controller Adapter](screenshot.png)
+
 A free app that turns a PlayStation or Xbox controller into keyboard keys. Plug in a controller, click a button, and choose the key or key combination it should press.
 
 On Windows, download [GamepadAdapter.exe](GamepadAdapter.exe), double-click it, and the mapping window opens. Nothing else needs to be installed.
