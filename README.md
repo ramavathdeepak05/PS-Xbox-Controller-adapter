@@ -17,6 +17,17 @@ The profile is saved as `controller_mapping.json` in the same folder as the exe.
 - A PlayStation controller shows the PlayStation image, with Share, Options, the touchpad, and the PlayStation button.
 - An Xbox controller shows the Xbox image. The labels switch to View, Menu, LB, RB, LT, RT, and A, B, X, Y. The D-pad and left stick trade places, matching an Xbox pad.
 
+## Source code
+
+The Python source is in [GamepadAdapter-source.zip](GamepadAdapter-source.zip). It includes `ps3_adapter.py`, the mapping window, and the controller images. This is for Windows. Unzip it, install the libraries, and start the app:
+
+```bat
+pip install pywebview pyinstaller
+run_adapter.bat
+```
+
+`build_app.bat` builds a new `dist\GamepadAdapter.exe`.
+
 ## License
 
 The application is released under the [MIT License](LICENSE).
